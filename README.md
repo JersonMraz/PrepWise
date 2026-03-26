@@ -1,36 +1,151 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍽️ MealMind – Recipe Finder & Meal Planner
 
-## Getting Started
+MealMind is a modern web application built with Next.js that helps users discover recipes, plan meals efficiently, and generate smart grocery lists—all in one place.
 
-First, run the development server:
+Designed with a clean and intuitive UI, MealMind focuses on improving everyday cooking by combining recipe search, meal organization, and smart planning tools.
+
+---
+
+## 🚀 Features
+
+### 🔍 Recipe Finder
+
+* Search recipes by name or ingredients
+* Filter by:
+
+  * Cuisine
+  * Diet (vegan, keto, etc.)
+  * Preparation time
+  * Calories
+* View detailed recipe information:
+
+  * Ingredients
+  * Instructions
+  * Nutrition facts
+
+---
+
+### 📅 Meal Planner
+
+* Weekly meal planning (Monday–Sunday)
+* Assign recipes to:
+
+  * Breakfast
+  * Lunch
+  * Dinner
+* Simple and organized layout for easy tracking
+
+---
+
+### ❤️ Favorites
+
+* Save your favorite recipes
+* Quickly access saved meals anytime
+
+---
+
+### 🛒 Grocery List Generator
+
+* Automatically generate grocery lists from planned meals
+* Group ingredients by category
+* Mark items as completed/purchased
+
+---
+
+### 📊 Dashboard
+
+* Overview of:
+
+  * Saved recipes
+  * Weekly meal plan
+* Recommended recipes section
+
+---
+
+## 🤖 Future Enhancements
+
+* AI-powered meal recommendations
+* Smart ingredient-based suggestions
+* Nutrition tracking (calories, macros)
+* Drag-and-drop meal planner
+* Authentication & user accounts
+* PWA (installable app)
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend:** Next.js (App Router)
+* **Styling:** Tailwind CSS
+* **State Management:** React Context
+* **Authentication (optional):** NextAuth.js
+
+---
+
+## ⚙️ Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/JersonMraz/PrepWise.git
+cd PrepWise
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 4. Open in browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🌐 Deployment
 
-To learn more about Next.js, take a look at the following resources:
+This project is optimized for deployment on **Vercel**.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎯 Goals of the Project
 
-## Deploy on Vercel
+* Practice building a full-featured Next.js application
+* Improve UI/UX design skills
+* Integrate third-party APIs
+* Implement scalable frontend architecture
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📸 Screenshots (Optional)
+
+*Add screenshots of your UI here once available*
+
+---
+
+## 📌 Author
+
+Developed by **Jerson Sullano**
+
+---
+
+## ⭐ Acknowledgements
+
+* Recipe APIs (Spoonacular / Edamam)
+* Open-source UI inspirations
+* Next.js documentation
+
+---
+
+## 📄 License
+
+This project is open-source and available under the MIT License.
