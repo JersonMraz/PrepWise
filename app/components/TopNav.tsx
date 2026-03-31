@@ -12,7 +12,7 @@ export function TopNav() {
   const getUser = async () => {
     const token = localStorage.getItem('token')
 
-    const response = await api.get('/users/user', {
+    const response = await api.get('/api/users/user', {
       headers: {
         Authorization: `Bearer ${token}`
       }

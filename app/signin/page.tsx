@@ -17,7 +17,7 @@ export default function Signin() {
 
     const handleLogin = async (email: string, password: string) => {
         setLoggingIn(true);
-        const response = await api.post("/users/login", {
+        const response = await api.post("/api/users/login", {
             email,
             password,
         });

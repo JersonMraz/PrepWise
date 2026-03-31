@@ -19,7 +19,7 @@ export default function Signup() {
 
     const handleSignup = async (firstname: string, lastname: string, email: string, password: string) => {
         setCreatingAccount(true);
-        const response = await api.post("/users/register", {
+        const response = await api.post("/api/users/register", {
             firstname,
             lastname,
             email,
