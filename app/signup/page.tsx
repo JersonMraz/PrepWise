@@ -3,9 +3,39 @@ import { useState } from "react";
 import Link from "next/link";
 import { ChefHat, Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
+import api from "../lib/api";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const [creatingAccount, setCreatingAccount] = useState(false);
+
     const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
+
+    const handleSignup = async (firstname: string, lastname: string, email: string, password: string) => {
+        setCreatingAccount(true);
+        const response = await api.post("/users/register", {
+            firstname,
+            lastname,
+            email,
+            password,
+        });
+
+        console.log("Signup response: ", response);
+        const data = response.data;
+        console.log(data);
+
+        if (data.success) {
+            router.push("/signin");
+        }
+
+        setCreatingAccount(false);
+    }
 
     return (
         <div className="min-h-screen flex">
@@ -65,27 +95,45 @@ export default function Signup() {
                         </p>
                     </div>
 
-                    <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                    <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); handleSignup(firstname, lastname, email, password) }}>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <p className="text-sm font-body font-medium text-foreground">First name</p>
-                                <input id="firstName" placeholder="John" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                                <input
+                                    value={firstname}
+                                    onChange={(e) => setFirstname(e.target.value)}
+                                    id="firstName"
+                                    placeholder="John"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
                             </div>
                             <div className="space-y-2">
                                 <p className="text-sm font-body font-medium text-foreground">Last name</p>
-                                <input id="lastName" placeholder="Doe" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                                <input
+                                    value={lastname}
+                                    onChange={(e) => setLastname(e.target.value)}
+                                    id="lastName"
+                                    placeholder="Doe"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
                             </div>
                         </div>
 
                         <div className="space-y-2">
                             <p className="text-sm font-body font-medium text-foreground">Email</p>
-                            <input id="email" type="email" placeholder="you@example.com" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                            <input
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                id="email"
+                                type="email"
+                                placeholder="you@example.com"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
                         </div>
 
                         <div className="space-y-2">
                             <p className="text-sm font-body font-medium text-foreground">Password</p>
                             <div className="relative">
                                 <input
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
@@ -102,8 +150,36 @@ export default function Signup() {
                             <p className="text-xs text-muted-foreground">Must be at least 8 characters</p>
                         </div>
 
-                        <button type="submit" className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-primary text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
-                            Create account
+                        <button
+                            type="submit"
+                            disabled={creatingAccount}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-primary text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+                        >
+                            {creatingAccount ? (
+                                <span className="flex items-center justify-center gap-2">
+                                    <svg
+                                        className="animate-spin h-4 w-4 text-primary-foreground"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <circle
+                                            className="opacity-25"
+                                            cx="12" cy="12" r="10"
+                                            stroke="currentColor"
+                                            strokeWidth="4"
+                                        />
+                                        <path
+                                            className="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 3 0 5.373 0 12H4z"
+                                        />
+                                    </svg>
+                                    Creating account...
+                                </span>
+                            ) : (
+                                "Create account"
+                            )}
                         </button>
                     </form>
 

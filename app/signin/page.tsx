@@ -3,9 +3,36 @@ import { useState } from "react";
 import Link from "next/link";
 import { ChefHat, Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import api from "../lib/api";
 
 export default function Signin() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const [loggingIn, setLoggingIn] = useState(false);
+
     const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
+
+    const handleLogin = async (email: string, password: string) => {
+        setLoggingIn(true);
+        const response = await api.post("/users/login", {
+            email,
+            password,
+        });
+
+        const data = response.data;
+
+        if (data.success) {
+            localStorage.setItem("token", data.token);
+            router.push("/planner/dashboard");
+        } else {
+            alert(data.message);
+        }
+
+        setLoggingIn(false);
+    }
 
     return (
         <div className="flex min-h-screen">
@@ -65,10 +92,16 @@ export default function Signin() {
                         </p>
                     </div>
 
-                    <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                    <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); handleLogin(email, password) }}>
                         <div className="space-y-2">
                             <p className="text-sm font-body font-medium text-foreground">Email</p>
-                            <input id="email" type="email" placeholder="you@example.com" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer" />
+                            <input
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                id="email"
+                                type="email"
+                                placeholder="you@example.com"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer" />
                         </div>
 
                         <div className="space-y-2">
@@ -80,6 +113,8 @@ export default function Signin() {
                             </div>
                             <div className="relative">
                                 <input
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
@@ -95,8 +130,35 @@ export default function Signin() {
                             </div>
                         </div>
 
-                        <button type="submit" className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-primary text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
-                            Sign in
+                        <button
+                            type="submit"
+                            disabled={loggingIn}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-primary text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
+                            {loggingIn ? (
+                                <span className="flex items-center justify-center gap-2">
+                                    <svg
+                                        className="animate-spin h-4 w-4 text-primary-foreground"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <circle
+                                            className="opacity-25"
+                                            cx="12" cy="12" r="10"
+                                            stroke="currentColor"
+                                            strokeWidth="4"
+                                        />
+                                        <path
+                                            className="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 3 0 5.373 0 12H4z"
+                                        />
+                                    </svg>
+                                    Signing in...
+                                </span>
+                            ) : (
+                                "Sign in"
+                            )}
                         </button>
                     </form>
                     <p className="text-center text-sm text-muted-foreground">
